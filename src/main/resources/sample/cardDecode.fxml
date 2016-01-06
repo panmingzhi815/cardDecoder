@@ -27,7 +27,7 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#clean_onAction" text="清除己加密列表" />
                   <MenuItem mnemonicParsing="false" onAction="#reset_onAction" text="还原卡片密码" />
-                  <MenuItem mnemonicParsing="false" onAction="#unreset_onAction" text="重新加密卡片" />
+                  <MenuItem mnemonicParsing="false" onAction="#unReset_onAction" text="重新加密卡片" />
             </items>
           </Menu>
         </menus>

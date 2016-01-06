@@ -2,26 +2,20 @@ package sample;
 
 import com.sun.javafx.stage.StageHelper;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundImage;
 import org.apache.commons.lang.StringUtils;
 import org.pan.transport.MessageAddress;
 import org.pan.transport.MessageTransport;
 import org.pan.transport.MessageTransportFactory;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -31,7 +25,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Controller implements Initializable {
 
     @FXML
-    public TableView TableView_cardList;
+    public TableView<CardInfo> TableView_cardList;
     @FXML
     public TextArea TextArea_log;
     final Image imageStart = new Image(getClass().getResourceAsStream("key_start_72.png"));
@@ -70,9 +64,9 @@ public class Controller implements Initializable {
         TextArea_log.appendText("在这里将显示加密操作信息：\n");
         TextArea_log.appendText("提示：请先选择串口，再单击钥匙图标开始\n");
 
-        ObservableList<TableColumn> observableList = TableView_cardList.getColumns();
-        observableList.get(0).setCellValueFactory(new PropertyValueFactory("id"));
-        observableList.get(1).setCellValueFactory(new PropertyValueFactory("cardId"));
+        ObservableList<TableColumn<CardInfo,?>> observableList = TableView_cardList.getColumns();
+        observableList.get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
+        observableList.get(1).setCellValueFactory(new PropertyValueFactory<>("cardId"));
 
         Button_start.setGraphic(new ImageView(imageStop));
         COM1.setToggleGroup(toggleGroup);
@@ -83,43 +77,43 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void changeCOM1_onAction(ActionEvent actionEvent) {
+    public void changeCOM1_onAction() {
         COM = "COM1";
         Platform.runLater(() -> TextArea_log.appendText("当前串口：COM1\n"));
     }
 
     @FXML
-    public void changeCOM2_onAction(ActionEvent actionEvent) {
+    public void changeCOM2_onAction() {
         COM = "COM2";
         Platform.runLater(() -> TextArea_log.appendText("当前串口：COM2\n"));
     }
 
     @FXML
-    public void changeCOM3_onAction(ActionEvent actionEvent) {
+    public void changeCOM3_onAction() {
         COM = "COM3";
         Platform.runLater(() -> TextArea_log.appendText("当前串口：COM3\n"));
     }
 
     @FXML
-    public void changeCOM4_onAction(ActionEvent actionEvent) {
+    public void changeCOM4_onAction() {
         COM = "COM4";
         Platform.runLater(() -> TextArea_log.appendText("当前串口：COM4\n"));
     }
 
     @FXML
-    public void changeCOM5_onAction(ActionEvent actionEvent) {
+    public void changeCOM5_onAction() {
         COM = "COM5";
         Platform.runLater(() -> TextArea_log.appendText("当前串口：COM5\n"));
     }
 
     @FXML
-    public void changeCOM6_onAction(ActionEvent actionEvent) {
+    public void changeCOM6_onAction() {
         COM = "COM6";
         Platform.runLater(() -> TextArea_log.appendText("当前串口：COM6\n"));
     }
 
     @FXML
-    public void start_onAction(ActionEvent actionEvent) {
+    public void start_onAction() {
         if (StringUtils.isBlank(COM)){
             new Alert(Alert.AlertType.INFORMATION,"请先选择一个COM口", ButtonType.OK).show();
             return;
@@ -130,7 +124,7 @@ public class Controller implements Initializable {
             scheduledExecutorService.scheduleWithFixedDelay(() -> {
                 byte[] bytes;
                 String cardId;
-                try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM));){
+                try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                     if (reset){
                         messageTransport.sendMessage(loadOldPassword2, 6, 200,50);
                     }else {
@@ -152,28 +146,28 @@ public class Controller implements Initializable {
 
                 if (reset){
                     Platform.runLater(()-> TextArea_log.appendText("加密开始\n"));
-                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM));){
+                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd0_2, 9, 200,100);
                         Platform.runLater(() -> TextArea_log.appendText("加密第0扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第0扇区失败\n"));
                     }
 
-                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM));){
+                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd1_2, 9, 200,100);
                         Platform.runLater(() -> TextArea_log.appendText("加密第1扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第1扇区失败\n"));
                     }
 
-                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM));){
+                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd2_2, 9, 200,100);
                         Platform.runLater(() -> TextArea_log.appendText("加密第2扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第2扇区失败\n"));
                     }
 
-                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM));){
+                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd3_2, 9, 200,100);
                         Platform.runLater(() -> TextArea_log.appendText("加密第3扇区成功\n"));
                     } catch (Exception e) {
@@ -187,28 +181,28 @@ public class Controller implements Initializable {
                     });
                 }else {
                     Platform.runLater(()-> TextArea_log.appendText("加密开始\n"));
-                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM));){
+                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd0, 9, 200,100);
                         Platform.runLater(() -> TextArea_log.appendText("加密第0扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第0扇区失败\n"));
                     }
 
-                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM));){
+                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd1, 9, 200,100);
                         Platform.runLater(() -> TextArea_log.appendText("加密第1扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第1扇区失败\n"));
                     }
 
-                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM));){
+                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd2, 9, 200,100);
                         Platform.runLater(() -> TextArea_log.appendText("加密第2扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第2扇区失败\n"));
                     }
 
-                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM));){
+                    try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd3, 9, 200,100);
                         Platform.runLater(() -> TextArea_log.appendText("加密第3扇区成功\n"));
                     } catch (Exception e) {
@@ -229,28 +223,12 @@ public class Controller implements Initializable {
         }
     }
 
-    @FXML
-    public void stop_onAction(ActionEvent actionEvent) {
-        if (scheduledExecutorService != null){
-            scheduledExecutorService.shutdown();
-            scheduledExecutorService = null;
-        }
-    }
-
-    @FXML
-    public void exit_onAction(ActionEvent actionEvent) {
-        if (scheduledExecutorService != null){
-            scheduledExecutorService.shutdown();
-        }
-        System.exit(5);
-    }
-
-    public void clean_onAction(ActionEvent actionEvent) {
+    public void clean_onAction() {
         TableView_cardList.getItems().clear();
         atomicLong.set(0);
     }
 
-    public void reset_onAction(ActionEvent actionEvent) {
+    public void reset_onAction() {
         reset = true;
         TableView_cardList.getItems().clear();
         atomicLong.set(0);
@@ -258,7 +236,7 @@ public class Controller implements Initializable {
         StageHelper.getStages().get(0).setTitle("东陆写卡停车场加密工具:正在还原初始密码");
     }
 
-    public void unreset_onAction(ActionEvent actionEvent) {
+    public void unReset_onAction() {
         reset = false;
         TableView_cardList.getItems().clear();
         atomicLong.set(0);
