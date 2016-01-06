@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="串口">
+            <items>
+                  <RadioMenuItem fx:id="COM1" mnemonicParsing="false" onAction="#changeCOM1_onAction" text="COM1" />
+                  <RadioMenuItem fx:id="COM2" mnemonicParsing="false" onAction="#changeCOM2_onAction" text="COM2" />
+                  <RadioMenuItem fx:id="COM3" mnemonicParsing="false" onAction="#changeCOM3_onAction" text="COM3" />
+                  <RadioMenuItem fx:id="COM4" mnemonicParsing="false" onAction="#changeCOM4_onAction" text="COM4" />
+                  <RadioMenuItem fx:id="COM5" mnemonicParsing="false" onAction="#changeCOM5_onAction" text="COM6" />
+                  <RadioMenuItem fx:id="COM6" mnemonicParsing="false" onAction="#changeCOM6_onAction" text="COM6" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="程序">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#clean_onAction" text="清除己加密列表" />
+                  <MenuItem mnemonicParsing="false" onAction="#reset_onAction" text="还原卡片密码" />
+                  <MenuItem mnemonicParsing="false" onAction="#unreset_onAction" text="重新加密卡片" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+         <children>
+            <Button fx:id="Button_start" mnemonicParsing="false" onAction="#start_onAction" prefHeight="72.0" prefWidth="72.0">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Label text="东陆卡片加密工具">
+               <font>
+                  <Font name="System Bold" size="46.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TableView fx:id="TableView_cardList" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+              <columns>
+                  <TableColumn prefWidth="75.0" text="序号" />
+                <TableColumn prefWidth="199.0" text="卡片内码" />
+              </columns>
+            </TableView>
+            <TextArea fx:id="TextArea_log" prefHeight="200.0" prefWidth="200.0" promptText="操作日志" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
