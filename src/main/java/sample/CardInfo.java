@@ -8,10 +8,12 @@ import javafx.beans.property.SimpleStringProperty;
 public class CardInfo {
     private SimpleStringProperty cardId = new SimpleStringProperty();
     private SimpleStringProperty id = new SimpleStringProperty();
+    private SimpleStringProperty size = new SimpleStringProperty();
 
-    public CardInfo(String id, String cardId) {
+    public CardInfo(String id, String cardId,String size) {
         this.cardId.set(cardId);
         this.id.set(id);
+        this.size.set(size);
     }
 
     public CardInfo() {
@@ -39,6 +41,18 @@ public class CardInfo {
 
     public void setId(String id) {
         this.id.set(id);
+    }
+
+    public String getSize() {
+        return size.get();
+    }
+
+    public SimpleStringProperty sizeProperty() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size.set(size);
     }
 
     @Override

@@ -67,6 +67,7 @@ public class Controller implements Initializable {
         ObservableList<TableColumn<CardInfo,?>> observableList = TableView_cardList.getColumns();
         observableList.get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         observableList.get(1).setCellValueFactory(new PropertyValueFactory<>("cardId"));
+        observableList.get(2).setCellValueFactory(new PropertyValueFactory<>("size"));
 
         Button_start.setGraphic(new ImageView(imageStop));
         COM1.setToggleGroup(toggleGroup);
@@ -136,7 +137,7 @@ public class Controller implements Initializable {
                         return;
                     }
                     cardId = ByteUtils.byteArrayToHexStringNoFormat(Arrays.copyOfRange(bytes, 3, 7));
-                    if(TableView_cardList.getItems().contains(new CardInfo("0",cardId))){
+                    if(TableView_cardList.getItems().contains(new CardInfo("0",cardId,"0"))){
                         Platform.runLater(()-> TextArea_log.appendText("该卡已经加密 :" +cardId+ "\n"));
                         return;
                     }
@@ -144,10 +145,12 @@ public class Controller implements Initializable {
                     return;
                 }
 
+                final AtomicLong size = new AtomicLong(0);
                 if (reset){
                     Platform.runLater(()-> TextArea_log.appendText("加密开始\n"));
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd0_2, 9, 200,100);
+                        size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第0扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第0扇区失败\n"));
@@ -155,6 +158,7 @@ public class Controller implements Initializable {
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd1_2, 9, 200,100);
+                        size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第1扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第1扇区失败\n"));
@@ -162,6 +166,7 @@ public class Controller implements Initializable {
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd2_2, 9, 200,100);
+                        size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第2扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第2扇区失败\n"));
@@ -169,6 +174,7 @@ public class Controller implements Initializable {
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd3_2, 9, 200,100);
+                        size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第3扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第3扇区失败\n"));
@@ -176,13 +182,14 @@ public class Controller implements Initializable {
 
                     Platform.runLater(()-> {
                         long andAdd = atomicLong.getAndAdd(1);
-                        TableView_cardList.getItems().add(0,new CardInfo(String.valueOf(andAdd), cardId));
+                        TableView_cardList.getItems().add(0,new CardInfo(String.valueOf(andAdd), cardId,String.valueOf(size.get())));
                         TextArea_log.appendText("加密结束,请换卡\n");
                     });
                 }else {
                     Platform.runLater(()-> TextArea_log.appendText("加密开始\n"));
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd0, 9, 200,100);
+                        size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第0扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第0扇区失败\n"));
@@ -190,6 +197,7 @@ public class Controller implements Initializable {
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd1, 9, 200,100);
+                        size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第1扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第1扇区失败\n"));
@@ -197,6 +205,7 @@ public class Controller implements Initializable {
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd2, 9, 200,100);
+                        size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第2扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第2扇区失败\n"));
@@ -204,6 +213,7 @@ public class Controller implements Initializable {
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                         messageTransport.sendMessage(cmd3, 9, 200,100);
+                        size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第3扇区成功\n"));
                     } catch (Exception e) {
                         Platform.runLater(()-> TextArea_log.appendText("加密第3扇区失败\n"));
@@ -211,7 +221,7 @@ public class Controller implements Initializable {
 
                     Platform.runLater(()-> {
                         long andAdd = atomicLong.getAndAdd(1);
-                        TableView_cardList.getItems().add(0,new CardInfo(String.valueOf(andAdd), cardId));
+                        TableView_cardList.getItems().add(0,new CardInfo(String.valueOf(andAdd), cardId,String.valueOf(size.get())));
                         TextArea_log.appendText("加密结束,请换卡\n");
                     });
                 }

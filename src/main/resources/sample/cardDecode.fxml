@@ -53,7 +53,8 @@
             <TableView fx:id="TableView_cardList" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
               <columns>
                   <TableColumn prefWidth="75.0" text="序号" />
-                <TableColumn prefWidth="199.0" text="卡片内码" />
+                <TableColumn prefWidth="120.0" text="卡片内码" />
+                <TableColumn prefWidth="95.0" text="写成功扇区数量" />
               </columns>
             </TableView>
             <TextArea fx:id="TextArea_log" prefHeight="200.0" prefWidth="200.0" promptText="操作日志" HBox.hgrow="ALWAYS" />
