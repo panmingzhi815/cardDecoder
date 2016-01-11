@@ -243,7 +243,7 @@ public class Controller implements Initializable {
         TableView_cardList.getItems().clear();
         atomicLong.set(0);
 
-        StageHelper.getStages().get(0).setTitle("东陆写卡停车场加密工具:正在还原初始密码");
+        StageHelper.getStages().get(0).setTitle(Main.title_version + ":正在还原初始密码");
     }
 
     public void unReset_onAction() {
@@ -251,6 +251,6 @@ public class Controller implements Initializable {
         TableView_cardList.getItems().clear();
         atomicLong.set(0);
 
-        StageHelper.getStages().get(0).setTitle("东陆写卡停车场加密工具：正在加密卡片");
+        StageHelper.getStages().get(0).setTitle(Main.title_version + ":正在加密卡片");
     }
 }

@@ -19,7 +19,7 @@
                   <RadioMenuItem fx:id="COM2" mnemonicParsing="false" onAction="#changeCOM2_onAction" text="COM2" />
                   <RadioMenuItem fx:id="COM3" mnemonicParsing="false" onAction="#changeCOM3_onAction" text="COM3" />
                   <RadioMenuItem fx:id="COM4" mnemonicParsing="false" onAction="#changeCOM4_onAction" text="COM4" />
-                  <RadioMenuItem fx:id="COM5" mnemonicParsing="false" onAction="#changeCOM5_onAction" text="COM6" />
+                  <RadioMenuItem fx:id="COM5" mnemonicParsing="false" onAction="#changeCOM5_onAction" text="COM5" />
                   <RadioMenuItem fx:id="COM6" mnemonicParsing="false" onAction="#changeCOM6_onAction" text="COM6" />
             </items>
           </Menu>
