@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    final static String title_version ="东陆写卡停车场加密工具_1.1";
+    final static String title_version ="东陆写卡停车场加密工具_1.2";
 
     @Override
     public void start(Stage primaryStage) throws Exception{

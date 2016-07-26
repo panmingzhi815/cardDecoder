@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Controller implements Initializable {
-
     @FXML
     public TableView<CardInfo> TableView_cardList;
     @FXML
@@ -127,12 +126,12 @@ public class Controller implements Initializable {
                 String cardId;
                 try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
                     if (reset){
-                        messageTransport.sendMessage(loadOldPassword2, 6, 200,50);
+                        messageTransport.sendMessage(loadOldPassword2, 6, 1000,50);
                     }else {
-                        messageTransport.sendMessage(loadOldPassword, 6, 200,50);
+                        messageTransport.sendMessage(loadOldPassword, 6, 1000,50);
                     }
 
-                    bytes = messageTransport.sendMessage(readCard, 9, 200,50);
+                    bytes = messageTransport.sendMessage(readCard, 9, 1000,50);
                     if (bytes == null){
                         return;
                     }
@@ -142,6 +141,7 @@ public class Controller implements Initializable {
                         return;
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     return;
                 }
 
@@ -149,7 +149,7 @@ public class Controller implements Initializable {
                 if (reset){
                     Platform.runLater(()-> TextArea_log.appendText("加密开始\n"));
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
-                        messageTransport.sendMessage(cmd0_2, 9, 200,100);
+                        messageTransport.sendMessage(cmd0_2, 9, 1000,100);
                         size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第0扇区成功\n"));
                     } catch (Exception e) {
@@ -157,7 +157,7 @@ public class Controller implements Initializable {
                     }
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
-                        messageTransport.sendMessage(cmd1_2, 9, 200,100);
+                        messageTransport.sendMessage(cmd1_2, 9, 1000,100);
                         size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第1扇区成功\n"));
                     } catch (Exception e) {
@@ -165,7 +165,7 @@ public class Controller implements Initializable {
                     }
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
-                        messageTransport.sendMessage(cmd2_2, 9, 200,100);
+                        messageTransport.sendMessage(cmd2_2, 9, 1000,100);
                         size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第2扇区成功\n"));
                     } catch (Exception e) {
@@ -173,7 +173,7 @@ public class Controller implements Initializable {
                     }
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
-                        messageTransport.sendMessage(cmd3_2, 9, 200,100);
+                        messageTransport.sendMessage(cmd3_2, 9, 1000,100);
                         size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第3扇区成功\n"));
                     } catch (Exception e) {
@@ -188,7 +188,7 @@ public class Controller implements Initializable {
                 }else {
                     Platform.runLater(()-> TextArea_log.appendText("加密开始\n"));
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
-                        messageTransport.sendMessage(cmd0, 9, 200,100);
+                        messageTransport.sendMessage(cmd0, 9, 1000,100);
                         size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第0扇区成功\n"));
                     } catch (Exception e) {
@@ -196,7 +196,7 @@ public class Controller implements Initializable {
                     }
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
-                        messageTransport.sendMessage(cmd1, 9, 200,100);
+                        messageTransport.sendMessage(cmd1, 9, 1000,100);
                         size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第1扇区成功\n"));
                     } catch (Exception e) {
@@ -204,7 +204,7 @@ public class Controller implements Initializable {
                     }
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
-                        messageTransport.sendMessage(cmd2, 9, 200,100);
+                        messageTransport.sendMessage(cmd2, 9, 1000,100);
                         size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第2扇区成功\n"));
                     } catch (Exception e) {
@@ -212,7 +212,7 @@ public class Controller implements Initializable {
                     }
 
                     try (MessageTransport messageTransport = MessageTransportFactory.createMessageTransport(MessageAddress.createComMessageAddress(COM))){
-                        messageTransport.sendMessage(cmd3, 9, 200,100);
+                        messageTransport.sendMessage(cmd3, 9, 1000,100);
                         size.addAndGet(1);
                         Platform.runLater(() -> TextArea_log.appendText("加密第3扇区成功\n"));
                     } catch (Exception e) {
